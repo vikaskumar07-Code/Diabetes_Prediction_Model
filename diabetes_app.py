@@ -185,6 +185,7 @@ h1, h2, h3 { font-family: 'Syne', sans-serif; }
     line-height: 1.75;
     max-width: 560px;
     margin: 0 auto 2.8rem;
+    text-align: center !important
 }
 
 /* ── STATS ROW ── */
@@ -337,9 +338,13 @@ label {
 /* ═══════════════════════════════════════════════
    PREDICT BUTTON
    ═══════════════════════════════════════════════ */
-.stButton { margin-top: 0.5rem; }
+.stButton {
+    margin-top: 0.5rem;
+    display: flex !important;
+    justify-content: center !important;
+}
 .stButton > button {
-    width: 100% !important;
+    width: 50% !important;
     background: linear-gradient(100deg, #00bfb8 0%, #0094e8 55%, #4f72ff 100%) !important;
     background-color: #00bfb8 !important;   /* fallback for Cloud */
     color: #ffffff !important;
