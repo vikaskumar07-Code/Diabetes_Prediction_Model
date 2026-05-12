@@ -397,16 +397,16 @@ st.markdown("""
             <span class="stat-label">Model Accuracy</span>
         </div>
         <div class="stat-item">
+            <span class="stat-value">50K+</span>
+            <span class="stat-label">Model</span>
+        </div>
+        <div class="stat-item">
             <span class="stat-value">24 / 7</span>
             <span class="stat-label">Available</span>
         </div>
         <div class="stat-item">
             <span class="stat-value">&lt; 2s</span>
             <span class="stat-label">Instant Result</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-value">Random Forest</span>
-            <span class="stat-label">Model Name</span>
         </div>
     </div>
 </div>
