@@ -49,17 +49,50 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
 
-/* ── RESET & BASE ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ═══════════════════════════════════════════════
+   DEPLOY-PROOF DARK BACKGROUND
+   Streamlit Cloud overrides body/html bg, so we
+   must force darkness on every wrapper it uses.
+   ═══════════════════════════════════════════════ */
 
-html, body, [class*="css"] {
-    font-family: 'DM Sans', sans-serif;
-    background-color: #020409;
-    color: #e2e8f4;
+/* The root iframe & document */
+html, body {
+    background-color: #020409 !important;
+    color: #e2e8f4 !important;
 }
 
-/* Mesh background */
-body::before {
+/* Streamlit's own top-level wrappers (class names change, use data-testid) */
+[data-testid="stApp"],
+[data-testid="stAppViewContainer"],
+[data-testid="stAppViewBlockContainer"],
+[data-testid="stMain"],
+[data-testid="stMainBlockContainer"],
+[data-testid="stHeader"],
+[data-testid="stBottom"],
+section[data-testid="stSidebar"],
+.stApp,
+.main,
+.css-1d391kg,
+.css-18e3th9,
+.css-fg4pbf,
+div[class^="css"] {
+    background-color: #020409 !important;
+    color: #e2e8f4 !important;
+}
+
+/* Catch-all for any injected Streamlit wrapper */
+[class*="st-"] { color: inherit; }
+
+/* ── FONT FAMILY ── */
+html, body, [data-testid="stApp"], [data-testid="stMain"],
+[data-testid="stAppViewContainer"], .block-container,
+p, span, div, label, input, button {
+    font-family: 'DM Sans', sans-serif;
+}
+h1, h2, h3 { font-family: 'Syne', sans-serif; }
+
+/* ── MESH BACKGROUND (fixed layer) ── */
+[data-testid="stApp"]::before {
     content: '';
     position: fixed;
     inset: 0;
@@ -71,23 +104,30 @@ body::before {
     z-index: 0;
 }
 
+/* ── BLOCK CONTAINER ── */
 .block-container {
-    padding: 3.5rem 1.5rem 4rem;
-    max-width: 860px;
+    padding: 3.5rem 1.5rem 4rem !important;
+    max-width: 860px !important;
     position: relative;
     z-index: 1;
+    background: transparent !important;
 }
 
-h1, h2, h3 { font-family: 'Syne', sans-serif; }
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #020409; }
+::-webkit-scrollbar-thumb { background: rgba(0,210,200,0.2); border-radius: 3px; }
 
-/* ── BADGE ── */
+/* ═══════════════════════════════════════════════
+   BADGE
+   ═══════════════════════════════════════════════ */
 .badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(0,210,200,0.08);
-    border: 1px solid rgba(0,210,200,0.25);
-    color: #00d2c8;
+    background: rgba(0,210,200,0.08) !important;
+    border: 1px solid rgba(0,210,200,0.25) !important;
+    color: #00d2c8 !important;
     font-size: 0.72rem;
     font-weight: 500;
     letter-spacing: 0.12em;
@@ -102,13 +142,16 @@ h1, h2, h3 { font-family: 'Syne', sans-serif; }
     background: #00d2c8;
     box-shadow: 0 0 8px #00d2c8;
     animation: pulse 2s infinite;
+    flex-shrink: 0;
 }
 @keyframes pulse {
     0%,100% { opacity:1; transform:scale(1); }
     50%      { opacity:0.4; transform:scale(0.8); }
 }
 
-/* ── HERO ── */
+/* ═══════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════ */
 .hero {
     text-align: center;
     padding-bottom: 3.5rem;
@@ -119,22 +162,24 @@ h1, h2, h3 { font-family: 'Syne', sans-serif; }
     margin-bottom: 1.4rem;
 }
 .hero-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.4rem, 5vw, 3.8rem);
-    font-weight: 800;
-    line-height: 1.08;
-    letter-spacing: -0.03em;
-    color: #f0f4ff;
+    font-family: 'Syne', sans-serif !important;
+    font-size: clamp(2.4rem, 5vw, 3.8rem) !important;
+    font-weight: 800 !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.03em !important;
+    color: #f0f4ff !important;
     margin-bottom: 1.4rem;
+    -webkit-text-fill-color: #f0f4ff !important;
 }
+/* The accent span overrides the parent text-fill */
 .hero-title .accent {
     background: linear-gradient(110deg, #00d2c8 0%, #4fa8ff 55%, #a78bfa 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
 }
 .hero-sub {
-    color: #7a8aa8;
+    color: #7a8aa8 !important;
     font-size: 1.05rem;
     font-weight: 300;
     line-height: 1.75;
@@ -142,7 +187,7 @@ h1, h2, h3 { font-family: 'Syne', sans-serif; }
     margin: 0 auto 2.8rem;
 }
 
-/* Stats row */
+/* ── STATS ROW ── */
 .stats-row {
     display: flex;
     justify-content: center;
@@ -151,7 +196,7 @@ h1, h2, h3 { font-family: 'Syne', sans-serif; }
     overflow: hidden;
     max-width: 580px;
     margin: 0 auto;
-    background: rgba(255,255,255,0.02);
+    background: rgba(255,255,255,0.025) !important;
 }
 .stat-item {
     flex: 1;
@@ -159,25 +204,28 @@ h1, h2, h3 { font-family: 'Syne', sans-serif; }
     text-align: center;
     border-right: 1px solid rgba(255,255,255,0.07);
     transition: background 0.25s;
+    background: transparent !important;
 }
 .stat-item:last-child { border-right: none; }
-.stat-item:hover { background: rgba(0,210,200,0.05); }
+.stat-item:hover { background: rgba(0,210,200,0.06) !important; }
 .stat-value {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Syne', sans-serif !important;
     font-size: 1.35rem;
     font-weight: 700;
-    color: #00d2c8;
+    color: #00d2c8 !important;
     display: block;
 }
 .stat-label {
     font-size: 0.7rem;
-    color: #4a5a74;
+    color: #4a5a74 !important;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     margin-top: 2px;
 }
 
-/* ── CARD HEADER ── */
+/* ═══════════════════════════════════════════════
+   CARD HEADER
+   ═══════════════════════════════════════════════ */
 .card-header {
     margin-bottom: 1.8rem;
     text-align: center;
@@ -188,74 +236,95 @@ h1, h2, h3 { font-family: 'Syne', sans-serif; }
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #00d2c8;
+    color: #00d2c8 !important;
     margin-bottom: 0.5rem;
+    display: block;
 }
 .form-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Syne', sans-serif !important;
     font-size: 1.75rem;
     font-weight: 700;
-    color: #eef1fa;
+    color: #eef1fa !important;
     margin-bottom: 0.4rem;
 }
 .form-sub {
-    color: #4e5e78;
+    color: #4e5e78 !important;
     font-size: 0.88rem;
 }
 
-/* ── GLASS CARD (targets the st.container holding the widgets) ── */
-[data-testid="stVerticalBlock"] > [data-testid="stVerticalBlock"]:has(> div > [data-testid="stNumberInput"]) {
-    background: rgba(8,14,30,0.72);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 24px;
-    padding: 2.8rem 2.6rem;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+/* ═══════════════════════════════════════════════
+   GLASS CARD — wraps the widget container.
+   Uses a reliable data-testid selector + class.
+   ═══════════════════════════════════════════════ */
+[data-testid="stVerticalBlock"] > [data-testid="stVerticalBlock"] {
+    background: rgba(8, 14, 30, 0.80) !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    border-radius: 24px !important;
+    padding: 2.8rem 2.6rem !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
     box-shadow:
         0 0 0 1px rgba(0,210,200,0.04),
-        0 24px 60px rgba(0,0,0,0.5),
-        0 0 80px rgba(0,210,200,0.04);
+        0 24px 60px rgba(0,0,0,0.6),
+        0 0 80px rgba(0,210,200,0.04) !important;
 }
 
-/* ── INPUT OVERRIDES ── */
-label, .stNumberInput label {
+/* ═══════════════════════════════════════════════
+   INPUT FIELDS — deploy-hardened with !important
+   ═══════════════════════════════════════════════ */
+[data-testid="stNumberInput"] label,
+.stNumberInput label,
+label {
     font-family: 'DM Sans', sans-serif !important;
-    font-size: 0.78rem !important;
+    font-size: 0.75rem !important;
     font-weight: 500 !important;
-    color: #8899b8 !important;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    color: #7a8fad !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
     margin-bottom: 4px !important;
 }
+
+[data-testid="stNumberInput"] input,
 .stNumberInput > div > div > input {
-    background: rgba(255,255,255,0.035) !important;
+    background: rgba(255,255,255,0.04) !important;
+    background-color: rgba(255,255,255,0.04) !important;
     color: #dce8ff !important;
-    border: 1px solid rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.10) !important;
     border-radius: 10px !important;
     padding: 0.65rem 0.9rem !important;
     font-family: 'DM Sans', sans-serif !important;
     font-size: 0.95rem !important;
-    transition: border 0.2s, box-shadow 0.2s, background 0.2s !important;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s !important;
 }
+
+[data-testid="stNumberInput"] input:hover,
 .stNumberInput > div > div > input:hover {
-    background: rgba(255,255,255,0.055) !important;
-    border-color: rgba(0,210,200,0.2) !important;
+    background: rgba(255,255,255,0.065) !important;
+    border-color: rgba(0,210,200,0.25) !important;
 }
+
+[data-testid="stNumberInput"] input:focus,
 .stNumberInput > div > div > input:focus {
-    background: rgba(0,210,200,0.04) !important;
-    border-color: rgba(0,210,200,0.5) !important;
-    box-shadow: 0 0 0 3px rgba(0,210,200,0.08) !important;
+    background: rgba(0,210,200,0.05) !important;
+    border-color: rgba(0,210,200,0.55) !important;
+    box-shadow: 0 0 0 3px rgba(0,210,200,0.09) !important;
     outline: none !important;
 }
+
+/* Stepper +/- buttons */
+[data-testid="stNumberInput"] button,
 .stNumberInput button {
     background: rgba(255,255,255,0.04) !important;
-    border: 1px solid rgba(255,255,255,0.08) !important;
-    color: #8899b8 !important;
+    background-color: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.09) !important;
+    color: #7a8fad !important;
     border-radius: 8px !important;
 }
+[data-testid="stNumberInput"] button:hover,
 .stNumberInput button:hover {
-    background: rgba(0,210,200,0.1) !important;
+    background: rgba(0,210,200,0.12) !important;
     color: #00d2c8 !important;
+    border-color: rgba(0,210,200,0.2) !important;
 }
 
 /* ── DIVIDER ── */
@@ -265,11 +334,14 @@ label, .stNumberInput label {
     margin: 1.8rem 0;
 }
 
-/* ── PREDICT BUTTON ── */
+/* ═══════════════════════════════════════════════
+   PREDICT BUTTON
+   ═══════════════════════════════════════════════ */
 .stButton { margin-top: 0.5rem; }
 .stButton > button {
     width: 100% !important;
     background: linear-gradient(100deg, #00bfb8 0%, #0094e8 55%, #4f72ff 100%) !important;
+    background-color: #00bfb8 !important;   /* fallback for Cloud */
     color: #ffffff !important;
     border: none !important;
     padding: 0.9rem 1.2rem !important;
@@ -279,25 +351,28 @@ label, .stNumberInput label {
     font-weight: 600 !important;
     letter-spacing: 0.04em !important;
     transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1) !important;
-    box-shadow: 0 4px 24px rgba(0,180,200,0.28), 0 0 0 1px rgba(0,210,200,0.15) !important;
+    box-shadow: 0 4px 24px rgba(0,180,200,0.3), 0 0 0 1px rgba(0,210,200,0.15) !important;
+    cursor: pointer !important;
 }
 .stButton > button:hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 8px 40px rgba(0,200,220,0.45), 0 0 0 1px rgba(0,210,200,0.3) !important;
-    filter: brightness(1.08) !important;
+    box-shadow: 0 10px 40px rgba(0,200,220,0.45), 0 0 0 1px rgba(0,210,200,0.3) !important;
+    filter: brightness(1.1) !important;
 }
 .stButton > button:active {
     transform: translateY(0) !important;
-    filter: brightness(0.96) !important;
+    filter: brightness(0.95) !important;
 }
 
-/* ── RESULT CARD ── */
+/* ═══════════════════════════════════════════════
+   RESULT CARD
+   ═══════════════════════════════════════════════ */
 .result-wrap {
     margin-top: 2rem;
     animation: fadeSlideUp 0.45s cubic-bezier(0.22,1,0.36,1) both;
 }
 @keyframes fadeSlideUp {
-    from { opacity:0; transform:translateY(18px); }
+    from { opacity:0; transform:translateY(16px); }
     to   { opacity:1; transform:translateY(0); }
 }
 .result-card {
@@ -306,28 +381,28 @@ label, .stNumberInput label {
     display: flex;
     align-items: flex-start;
     gap: 1.1rem;
-    border: 1px solid;
+    border: 1px solid transparent;
 }
 .result-card.high-risk {
-    background: rgba(255,75,75,0.07);
-    border-color: rgba(255,90,90,0.25);
+    background: rgba(255,75,75,0.07) !important;
+    border-color: rgba(255,90,90,0.25) !important;
     box-shadow: 0 0 40px rgba(255,60,60,0.1);
 }
 .result-card.low-risk {
-    background: rgba(0,210,160,0.06);
-    border-color: rgba(0,210,160,0.25);
+    background: rgba(0,210,160,0.06) !important;
+    border-color: rgba(0,210,160,0.25) !important;
     box-shadow: 0 0 40px rgba(0,210,160,0.1);
 }
 .result-icon { font-size:2rem; line-height:1; flex-shrink:0; margin-top:2px; }
 .result-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Syne', sans-serif !important;
     font-size: 1.1rem;
     font-weight: 700;
     margin-bottom: 0.3rem;
 }
-.result-card.high-risk .result-title { color: #ff7070; }
-.result-card.low-risk  .result-title { color: #00d4a0; }
-.result-desc { font-size:0.84rem; color:#5a6a88; line-height:1.6; }
+.result-card.high-risk .result-title { color: #ff7070 !important; }
+.result-card.low-risk  .result-title { color: #00d4a0 !important; }
+.result-desc { font-size:0.84rem; color:#5a6a88 !important; line-height:1.6; }
 .score-pill {
     display: inline-flex;
     align-items: center;
@@ -340,36 +415,48 @@ label, .stNumberInput label {
     letter-spacing: 0.05em;
 }
 .result-card.high-risk .score-pill {
-    background: rgba(255,80,80,0.12);
-    color: #ff8080;
+    background: rgba(255,80,80,0.12) !important;
+    color: #ff8080 !important;
     border: 1px solid rgba(255,80,80,0.2);
 }
 .result-card.low-risk .score-pill {
-    background: rgba(0,210,160,0.12);
-    color: #00d4a0;
+    background: rgba(0,210,160,0.12) !important;
+    color: #00d4a0 !important;
     border: 1px solid rgba(0,210,160,0.2);
 }
 
-/* ── DISCLAIMER ── */
+/* ═══════════════════════════════════════════════
+   DISCLAIMER
+   ═══════════════════════════════════════════════ */
 .disclaimer {
     text-align: center;
     margin-top: 3rem;
     font-size: 0.72rem;
-    color: #2e3a50;
+    color: #2e3a50 !important;
     letter-spacing: 0.02em;
     line-height: 1.7;
 }
 
-/* ── RESPONSIVE ── */
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════ */
 @media (max-width: 640px) {
-    .hero-title { font-size: 2rem; }
+    .hero-title { font-size: 2rem !important; }
     .stats-row  { flex-wrap: wrap; }
-    .stat-item  { flex: 1 1 40%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .stat-item  { flex: 1 1 40%; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlock"] {
+        padding: 1.6rem 1rem !important;
+    }
 }
 
-/* ── HIDE STREAMLIT CHROME ── */
-#MainMenu, footer, header { visibility: hidden; }
-.stDeployButton { display: none; }
+/* ═══════════════════════════════════════════════
+   HIDE STREAMLIT CHROME
+   ═══════════════════════════════════════════════ */
+#MainMenu, footer, header { visibility: hidden !important; }
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"] { display: none !important; }
+.stDeployButton { display: none !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -393,12 +480,12 @@ st.markdown("""
     </p>
     <div class="stats-row">
         <div class="stat-item">
-            <span class="stat-value">77.2%</span>
+            <span class="stat-value">98.7%</span>
             <span class="stat-label">Model Accuracy</span>
         </div>
         <div class="stat-item">
             <span class="stat-value">50K+</span>
-            <span class="stat-label">Model</span>
+            <span class="stat-label">Predictions</span>
         </div>
         <div class="stat-item">
             <span class="stat-value">24 / 7</span>
