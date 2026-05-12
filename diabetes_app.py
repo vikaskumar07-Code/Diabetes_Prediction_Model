@@ -387,7 +387,7 @@ st.markdown("""
   </p>
   <div class="stats-row">
     <div class="stat-item">
-      <span class="stat-value">98.7%</span>
+      <span class="stat-value">77.28%</span>
       <span class="stat-label">Model Accuracy</span>
     </div>
     <div class="stat-item">
@@ -415,7 +415,6 @@ st.markdown("""
 <p class="form-sub-text">All fields are required for an accurate prediction.</p>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="glass-card">', unsafe_allow_html=True)
 
 # ── Streamlit native form (reliable on Cloud) ──
 with st.form("predict_form"):
@@ -436,7 +435,6 @@ with st.form("predict_form"):
     st.markdown('<div class="form-divider"></div>', unsafe_allow_html=True)
     submitted = st.form_submit_button("⬡  Analyse Risk Profile →")
 
-st.markdown('</div>', unsafe_allow_html=True)
 
 # ═══════════════════════════════════════════════
 # PREDICTION
